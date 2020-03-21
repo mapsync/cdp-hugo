@@ -38,11 +38,14 @@ const encode = function (data) {
 }
 
 var NotificationControl = class Control extends React.Component {
-  state = {
-    message: "Submit",
-    disabled: false
+  constructor(props) {
+    super(props);
+    this.state = {
+      message: "Submit",
+      disabled: false
+    }
   }
-
+  
   handleClick(history, idString) {
     var id = parseInt(idString.split("-")[2]);
     var self = this;
