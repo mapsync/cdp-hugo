@@ -104,14 +104,6 @@ var NotificationControl = class Control extends React.Component {
     } = this.props;
     return (
       <div>
-        <Helmet>
-            <style type="text/css">{`
-              [role="button"]
-              {
-                  display: none;
-              }
-            `}</style>
-          </Helmet>
         <Route render={({ history}) => (
           <button style={style.send} disabled={this.state.disabled} onClick={() => { this.handleClick(history, forID); }} type="button">
           { this.state.message }
