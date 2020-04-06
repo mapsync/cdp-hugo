@@ -1,4 +1,5 @@
 import React from "react";
+import { Route } from 'react-router-dom'
 import CMS from "netlify-cms-app";
 
 // Import main site styles as a string to inject into the CMS preview pane
