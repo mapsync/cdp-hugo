@@ -1,7 +1,15 @@
 baseurl = "/"
 languageCode = "en-us"
 languageLang = "en"
-title = "Homepage"
+title = "City of Edmonton"
+
+[params]
+    Id = "cityofedmontonky"
+    Facebook = "https://www.facebook.com/CityOfEdmontonKY"
+    BillPay = "https://abpp.aristainfo.com/abpp/CustomerLogin.aspx?ClientId=EDK"
+
+[blackfriday]
+    extensions = ["hardLineBreak"]
 
 # RSS, categories and tags disabled for an easy start
 # See configuration options for more details: 

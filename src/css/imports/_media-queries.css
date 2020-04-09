@@ -3,3 +3,17 @@
 @custom-media --breakpoint-medium screen and (min-width: 50em);
 
 @custom-media --breakpoint-large screen and (min-width: 60em);
+
+
+.show-xs {
+  display: none !important;
+}
+
+@media (max-width: 640px) {
+    .hide-xs {
+        display: none !important;
+    }
+    .show-xs {
+        display: block !important;
+    }
+}
