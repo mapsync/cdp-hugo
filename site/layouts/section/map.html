@@ -9,11 +9,31 @@
     <div id='map' style='width:100%;height:calc(100vh - 3.2rem);'></div>
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.9.1/mapbox-gl.js'></script>
     <script>
-    mapboxgl.accessToken = 'pk.eyJ1IjoidHJvenVsIiwiYSI6IlZLcGZCYmMifQ.kL0ZGdoyd9WCM35WzVPQbg';
-    var map = new mapboxgl.Map({
-    container: 'map',
-    style: 'mapbox://styles/mapbox/streets-v9'
-    });
+        window.params = {
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v9'
+        }
+    </script>
+    {{ if isset .Params "center" }}
+        <script>
+            var center = JSON.Parse({{ .Params.center }});
+            window.params.center = center.coordinates;
+        </script>
+    {{ end }}
+    {{ if isset .Params "zoom" }}
+        <script>
+            window.params.zoom = {{ .Params.zoom }}
+        </script>
+    {{ end }}
+    {{ if isset .Params "location" }}
+        <script>
+            window.feature = JSON.Parse({{ .Params.location }});
+        </script>
+    {{ end }}
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoidHJvenVsIiwiYSI6IlZLcGZCYmMifQ.kL0ZGdoyd9WCM35WzVPQbg';
+        var map = new mapboxgl.Map(window.params);
+        console.log(window.feature);
     </script>
     <script src="/js/feather.min.js"></script>
     <script>
