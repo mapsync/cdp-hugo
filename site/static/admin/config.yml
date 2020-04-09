@@ -58,4 +58,4 @@ collections: # A list of collections the CMS should be able to edit
           - {label: Title, name: title, widget: string}
           - {label: "Center", name: "center", widget: "map" }
           - {label: "Zoom", name: "zoom", widget: "number", default: 15, valuyeType: "int", min: 1, max: 20, step: 1 }
-          - {label: "Location", name: "location", widget: "map" }
+          - {label: "Location", name: "location", widget: "map", type: "Polygon" }
