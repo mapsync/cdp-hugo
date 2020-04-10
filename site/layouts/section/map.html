@@ -16,7 +16,8 @@
     </script>
     {{ if isset .Params "center" }}
         <script>
-            var center = JSON.Parse({{ .Params.center }});
+            var center = JSON.parse({{ .Params.center }});
+            console.log(center)
             window.params.center = center.coordinates;
         </script>
     {{ end }}
@@ -25,15 +26,69 @@
             window.params.zoom = {{ .Params.zoom }}
         </script>
     {{ end }}
+    {{ if isset .Params "title" }}
+        <script>
+            window.alertTitle = {{ .Params.title }};
+        </script>
+    {{ end }}
+    {{ if isset .Params "description" }}
+        <script>
+            window.alertDescription = {{ .Params.description }};
+        </script>
+    {{ end }}
     {{ if isset .Params "location" }}
         <script>
-            window.feature = JSON.Parse({{ .Params.location }});
+            window.feature = JSON.parse({{ .Params.location }});
         </script>
     {{ end }}
     <script>
         mapboxgl.accessToken = 'pk.eyJ1IjoidHJvenVsIiwiYSI6IlZLcGZCYmMifQ.kL0ZGdoyd9WCM35WzVPQbg';
         var map = new mapboxgl.Map(window.params);
-        console.log(window.feature);
+        if (window.feature) {
+            map.on('load', function() {
+                map.addSource('advisory', {
+                    'type': 'geojson',
+                    'data': {
+                        'type': 'Feature',
+                        'geometry': window.feature
+                    }
+                });
+                map.addLayer({
+                    'id': 'advisory',
+                    'type': 'fill',
+                    'source': 'advisory',
+                    'layout': {},
+                    'paint': {
+                    'fill-color': '#ff0000',
+                    'fill-opacity': 0.25
+                    }
+                });
+
+                map.on('click', 'advisory', function(e) {
+                    var coordinates = e.lngLat;
+                    var description = `<strong>${window.alertTitle}</strong><p>${window.alertDescription}</p>`;
+                    
+                    while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                    }
+                    
+                    new mapboxgl.Popup()
+                    .setLngLat(coordinates)
+                    .setHTML(description)
+                    .addTo(map);
+                });
+                    
+                    // Change the cursor to a pointer when the mouse is over the places layer.
+                map.on('mouseenter', 'advisory', function() {
+                    map.getCanvas().style.cursor = 'pointer';
+                });
+                    
+                    // Change it back to a pointer when it leaves.
+                map.on('mouseleave', 'advisory', function() {
+                    map.getCanvas().style.cursor = '';
+                });
+            });
+        }
     </script>
     <script src="/js/feather.min.js"></script>
     <script>
